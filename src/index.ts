@@ -15,6 +15,7 @@ export class Server implements ServerSettings {
   middleware: Array<RequestHandler|ErrorRequestHandler>;
   beforeConfig: Array<FunctionWithPromise>;
   beforeInit: Array<FunctionWithPromise>;
+  afterListen: Array<FunctionWithPromise>;
   tests: Array<ServerTest>;
   runTestsBeforeListening: boolean = false;
   // ****** Status ***** //
@@ -43,6 +44,9 @@ export class Server implements ServerSettings {
     }
     if (settings.beforeInit) {
       this.beforeInit = Server.returnArray<FunctionWithPromise>(settings.beforeInit);
+    }
+    if (settings.afterListen) {
+      this.afterListen = Server.returnArray<FunctionWithPromise>(settings.afterListen);
     }
     if (settings.tests) {
       this.tests = Server.returnArray<ServerTest>(settings.tests);
@@ -173,10 +177,21 @@ export class Server implements ServerSettings {
         this.running = true;
         this.emitStatus();
 
+        // run after listen functions
+        if (this.afterListen) {
+          try {
+            await Server.runAllFunctions(this.afterListen, this);
+          } catch (e) {
+            return reject(e);
+          }
+        }
+
         resolve({
           initResults: beforeInitResults,
           httpServer: s
         })
+
+
       });
     });
   }
@@ -209,13 +224,13 @@ export class Server implements ServerSettings {
     })
   }
 
-  static runAllFunctions(functions: Array<FunctionWithPromise>): Promise<Array<any>> {
+  static runAllFunctions(functions: Array<FunctionWithPromise>, serverInstance?: Server): Promise<Array<any>> {
     return new Promise(async (resolve, reject) => {
       async function* execute(arr: Array<FunctionWithPromise>) {
         for (let i = 0; i < arr.length; i++) {
           let result;
           try {
-            result = await arr[i]();
+            result = await arr[i](serverInstance);
           } catch (err) {
             throw err;
           }
@@ -310,6 +325,7 @@ export interface ServerSettings {
   middleware?: Array<RequestHandler|ErrorRequestHandler>;
   beforeConfig?: FunctionWithPromise | Array<FunctionWithPromise>;
   beforeInit?: FunctionWithPromise | Array<FunctionWithPromise>;
+  afterListen?: Array<FunctionWithPromise>;
   tests?: ServerTest | Array<ServerTest>
   runTestsBeforeListening?: boolean;
 }

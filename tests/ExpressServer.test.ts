@@ -102,6 +102,32 @@ describe('Server', async function () {
     });
     await expect(server.listen()).to.eventually.be.rejectedWith('error before init');
   });
+  it('should run the afterListen functions', async function () {
+    let name = '';
+
+    let server = new Server({
+      port: 8092,
+      name: 'test server',
+      middleware: middleware,
+      beforeInit: [
+        function() {
+          return resolveIn(200, 'before init success');
+        }
+      ],
+      afterListen: [
+        function(serverInstance: Server) {
+          return new Promise<void>(async (resolve, reject) => {
+            name = serverInstance.name;
+            await resolveIn(200, 'before init success');
+            resolve();
+          });
+        }
+      ]
+    });
+    await server.config();
+    let listen = await server.listen();
+    expect(name).to.eq('test server');
+  });
   it('should start and close a server', async function () {
     let m = middleware;
     m.push(echoMiddleware);
