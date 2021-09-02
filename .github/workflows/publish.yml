@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-        - run: |-
+        - run: |
           npm install
           npm install -g typescript
       - name: build
