@@ -16,12 +16,13 @@ jobs:
         node: [ '12', '14', '16' ]
     steps:
       - uses: actions/checkout@v2
-      - name: Setup_  node
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node }}
-        - run: npm install
-        - run: npm install -g typescript
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+        run: |
+          npm install
+          npm install -g typescript
       - name: build
         id: build
         run: tsc
@@ -37,9 +38,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-        - run: npm install
-        - run: npm install -g typescript
-        - run: npm install -g mocha ts-node
+        run: |
+          npm install
+          npm install -g typescript mocha ts-node
       - name: Run Tests
         id: test
         run: npm run test
@@ -48,8 +49,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: stub
-        run: echo stub
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+        run: |
+          npm install
+          npm install -g typescript mocha ts-node
+      - name: build
+        run: tsc
+      - name: publish
+        run: echo "Do Publish"
 
   send_report:
     if: always()
