@@ -74,6 +74,7 @@ jobs:
           checkout_base_path: ./.github/actions/external
           app_id: ${{ secrets.APP_ID }}
           app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          configure_git: true
       - name: notify
         uses: ./.github/actions/external/telegram_notifier
         with:
