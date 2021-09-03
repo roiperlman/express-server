@@ -67,12 +67,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: notify
-        uses: nick-invision/private-action-loader@v3
+      - name: Private actions checkout
+        uses: daspn/private-actions-checkout@v2
         with:
-          pal-repo-token: ${{ secrets.REPO_TOKEN }}
-          pal-repo-name: roiperlman/telegram_notifier
-          pal-action-directory: .github/actions/
+          actions_list: '["roiperlman/telegram_notifier@master"]'
+          checkout_base_path: ./.github/actions/external
+          app_id: ${{ secrets.APP_ID }}
+          app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          configure_git: true
+      - name: notify
+        uses: ./.github/actions/external/telegram_notifier
+        with:
           message: >
             Workflow Execution Summary:
             📂 Repository ${{ github.event.repository.name }}:
