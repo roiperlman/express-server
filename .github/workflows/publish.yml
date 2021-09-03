@@ -67,13 +67,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Private actions checkout
-        uses: daspn/private-actions-checkout@v2
-        with:
-          actions_list: '["roiperlman/telegram_notifier@master"]'
-          checkout_base_path: ./.github/actions/external
-          app_id: ${{ secrets.APP_ID }}
-          app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
       - name: notify
         uses: nick-invision/private-action-loader@v3
         with:
