@@ -80,8 +80,10 @@ jobs:
         with:
           message: >
             Workflow Execution Summary:
-            📂 Repository ${{ github.event.repository.name }}:
+            📂 Repository: ${{ github.event.repository.name }}
+
             🔧 Workflow: ${{ github.workflow }}
+
             ❗️  Status: ${{ job.status }}
 
             Jobs Status::
