@@ -100,7 +100,7 @@ jobs:
 
             🔧 Workflow: ${{ github.workflow }}
 
-            ❗️  Status: ${{ job.status }}
+            ❗ Status: ${{ job.status }}
 
             Jobs Status:
               ▪️ Build: ${{ needs.build.result }}
