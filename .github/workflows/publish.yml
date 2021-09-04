@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '12', '14', '16' ]
+        node: [ '14', '15', '16' ]
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
@@ -26,12 +26,14 @@ jobs:
       - name: build
         id: build
         run: tsc
+
+########## TEST ##########
   test:
     needs: [build]
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '12', '14', '16' ]
+        node: [ '14', '15', '16' ]
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
@@ -44,9 +46,14 @@ jobs:
       - name: Run Tests
         id: test
         run: npm run test
+
+########## PUBLISH ##########
   publish:
     needs: [ build, test ]
     runs-on: ubuntu-latest
+    outputs:
+      update_type: ${{ steps.publish.outputs.type }}
+      new_version: ${{ steps.publish.outputs.version }}
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
@@ -56,10 +63,18 @@ jobs:
       - run: |
           npm install
           npm install -g typescript mocha ts-node
-      - name: build
+      - name: Build
         run: tsc
       - name: publish
-        run: echo "Do Publish"
+        id: publish
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          check-version: true
+      - if: steps.publish.outputs.type != 'none'
+        run: |
+          echo "Version changed: ${{ steps.publish.outputs.old-version }} => ${{ steps.publish.outputs.version }}"
+
 
   send_report:
     if: always()
@@ -80,13 +95,14 @@ jobs:
         with:
           message: >
             Workflow Execution Summary:
+
             📂 Repository: ${{ github.event.repository.name }}
 
             🔧 Workflow: ${{ github.workflow }}
 
             ❗️  Status: ${{ job.status }}
 
-            Jobs Status::
+            Jobs Status:
               ▪️ Build: ${{ needs.build.result }}
               ▪️ Test: ${{ needs.test.result }}
               ▪️ Publish: ${{ needs.test.result }}

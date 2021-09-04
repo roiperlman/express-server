@@ -285,31 +285,28 @@ export class ServerTest implements ServerTestConfig {
       }
     }
 
-    execute(): Promise<ServerTestResult> {
-      return new Promise(async (resolve, reject) => {
-        let error: Error;
-        try {
-          await this.testFunction()
-        } catch (err) {
-          error = err;
-        }
+    async execute(): Promise<ServerTestResult> {
+      let error: any;
+      try {
+        await this.testFunction()
+      } catch (err) {
+        error = err;
+      }
 
-        let r = {
-          error: error,
-          errorMessage: error ? this.onErrorMessage : '',
-          result: error ? null : this.onSuccessMessage
-        }
+      let r = {
+        error: error,
+        errorMessage: error ? this.onErrorMessage : '',
+        result: error ? null : this.onSuccessMessage
+      }
 
-        if(error) {
-          console.error(r.errorMessage)
-          console.error(r.error)
-        } else {
-          console.log(r.result);
-        }
+      if(error) {
+        console.error(r.errorMessage)
+        console.error(r.error)
+      } else {
+        console.log(r.result);
+      }
 
-        resolve(r)
-
-      });
+      return r;
     }
 }
 export interface ServerTestConfig {
