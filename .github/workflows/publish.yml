@@ -62,7 +62,7 @@ jobs:
           node-version: 16.x
       - run: |
           npm install
-          npm install -g typescript mocha ts-node
+          npm install -g typescript mocha ts-node chai chai-as-promised
       - name: Build
         run: tsc
       - name: publish
@@ -74,7 +74,6 @@ jobs:
       - if: steps.publish.outputs.type != 'none'
         run: |
           echo "Version changed: ${{ steps.publish.outputs.old-version }} => ${{ steps.publish.outputs.version }}"
-
 
   send_report:
     if: always()
