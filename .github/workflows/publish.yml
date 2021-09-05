@@ -90,7 +90,7 @@ jobs:
           app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
           configure_git: true
       - name: notify
-        uses: ./.github/actions/external/telegram_notifier/.github/actions
+        uses: ./.github/actions/external/telegram_notifier/.github/actions/notifier
         with:
           message: >
             Workflow Execution Summary:
