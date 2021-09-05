@@ -27,14 +27,22 @@ function echoMiddleware(req: Request, res: Response, next: NextFunction)  {
 
 describe('Server', async function () {
   this.timeout(600000);
-  before(function () {
+  const ports: Array<number> = []
+  const numberOfTest = 50;
+  function getPort() {
+    return ports.shift();
+  }
+  before(function (done) {
+    for (let i = 8081; i < numberOfTest; i++) {
+      ports.push(i);
+    }
   });
   it('Init An Express with middleware', async function () {
     let m = middleware;
     m.push(echoMiddleware);
 
     const server = new Server({
-      port: 8082,
+      port: getPort(),
       name: 'test server',
       middleware: m
     });
@@ -52,7 +60,7 @@ describe('Server', async function () {
   });
   it('should run the beforeConfig method', async function () {
     let server = new Server({
-      port: 8082,
+      port: getPort(),
       name: 'test server',
       middleware: middleware,
       beforeConfig: [
@@ -64,7 +72,7 @@ describe('Server', async function () {
     let configResults = await server.config();
     expect(configResults[0]).to.eq('before config success');
     server = new Server({
-      port: 8082,
+      port: getPort(),
       name: 'test server',
       middleware: middleware,
       beforeConfig: [
@@ -77,7 +85,7 @@ describe('Server', async function () {
   });
   it('should run the beforeInit method', async function () {
     let server = new Server({
-      port: 8083,
+      port: getPort(),
       name: 'test server',
       middleware: middleware,
       beforeInit: [
@@ -91,7 +99,7 @@ describe('Server', async function () {
     expect(listen.initResults[0]).to.eq('before init success');
 
     server = new Server({
-      port: 8082,
+      port: getPort(),
       name: 'test server',
       middleware: middleware,
       beforeInit: [
@@ -106,7 +114,7 @@ describe('Server', async function () {
     let name = '';
 
     let server = new Server({
-      port: 8092,
+      port: getPort(),
       name: 'test server',
       middleware: middleware,
       beforeInit: [
@@ -134,7 +142,7 @@ describe('Server', async function () {
 
 
     const server = new Server({
-      port: 8084,
+      port: getPort(),
       name: 'test server',
       middleware: m
     });
@@ -148,7 +156,7 @@ describe('Server', async function () {
     //   server.serverStatus.removeAllListeners();
     // })
     let server = new Server({
-      port: 8082,
+      port: getPort(),
       name: 'test server',
       middleware: middleware,
       beforeConfig: [
@@ -209,7 +217,7 @@ describe('Server', async function () {
       const someVar = 12345;
 
       const server = new Server({
-        port: 8084,
+        port: getPort(),
         name: 'test server',
         middleware: m,
         tests: [
@@ -246,7 +254,7 @@ describe('Server', async function () {
       const someVar = 12345;
 
       const server = new Server({
-        port: 8084,
+        port: getPort(),
         name: 'test server',
         middleware: m,
         tests: [
@@ -292,7 +300,7 @@ describe('Server', async function () {
       const someVar = 12345;
 
       const server = new Server({
-        port: 8084,
+        port: getPort(),
         name: 'test server',
         middleware: m,
         tests: [
