@@ -62,7 +62,7 @@ jobs:
           node-version: 16.x
       - run: |
           npm install
-          npm install -g typescript mocha ts-node chai chai-as-promised
+          npm install -g typescript mocha ts-node
       - name: Build
         run: tsc
       - name: publish
