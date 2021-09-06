@@ -547,7 +547,7 @@ describe('Server', async function () {
   });
   describe('Static Class Methods', function () {
     it('should always return an array', async function () {
-      const S = rewire('../src/index.ts').Server;
+      const S = rewire('../src/index.ts').ExpressServer;
       expect(S.returnArray([1,2,3])).to.be.an('array').that.has.length(3);
       expect(S.returnArray(1)).to.be.an('array').that.has.length(1);
       expect(S.returnArray(null)).to.be.null;
