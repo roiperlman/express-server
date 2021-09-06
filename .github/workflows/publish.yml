@@ -2,13 +2,10 @@ name: Build and publish package
 on:
   push:
     branches: [ master ]
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -73,28 +70,20 @@ jobs:
       - if: steps.publish.outputs.type != 'none'
         run: |
           echo "Version changed: ${{ steps.publish.outputs.old-version }} => ${{ steps.publish.outputs.version }}"
-
+########## SEND REPORT ##########
   send_report:
     if: always()
     needs: [ build, test, publish ]
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
-      - name: Private actions checkout
-        uses: daspn/private-actions-checkout@v2
-        with:
-          actions_list: '["roiperlman/telegram_notifier@master"]'
-          checkout_base_path: ./.github/actions/external
-          app_id: ${{ secrets.APP_ID }}
-          app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
-          configure_git: true
-      - uses: actions/checkout@v2
       - name: Notify
-      - run: ls /home/runner/work/express-server/express-server/.github/actions/external/telegram_notifier/.github/actions/notifier
-      - name: notify
-        uses: ./.github/actions/external/telegram_notifier/.github/actions/notifier
-
+      - run: echo "Sending report to telgram bot"
+      - uses: appleboy/telegram-action@master
         with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
           message: >
             Workflow Execution Summary:
 
