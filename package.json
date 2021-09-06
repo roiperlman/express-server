@@ -1,9 +1,9 @@
 {
   "name": "@roip/express-server",
   "version": "1.0.0",
-  "description": "> TODO: description",
+  "description": "Control the setup process of express applications",
   "author": "Roi Perlman <Roi.Perlman@gmail.com>",
-  "homepage": "",
+  "homepage": "https://github.com/roiperlman/express-server",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {
@@ -13,6 +13,7 @@
   "files": [
     "lib"
   ],
+  "keywords": ["express", "server"],
   "scripts": {
     "test": "mocha -r ts-node/register ./tests/**.test.ts",
     "build": "tsc --extendedDiagnostics",
