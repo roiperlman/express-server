@@ -32,10 +32,11 @@ describe('Server', async function () {
   function getPort() {
     return ports.shift();
   }
-  before(function (done) {
+  before(async function () {
     for (let i = 8081; i < numberOfTest; i++) {
       ports.push(i);
     }
+    return;
   });
   it('Init An Express with middleware', async function () {
     let m = middleware;
