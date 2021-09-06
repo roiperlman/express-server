@@ -9,7 +9,6 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -104,7 +103,9 @@ jobs:
             Jobs Status:
               ▪️ Build: ${{ needs.build.result }}
               ▪️ Test: ${{ needs.test.result }}
-              ▪️ Publish: ${{ needs.test.result }}
+              ▪️ Publish: ${{ needs.publish.result }}
+                    New Version: ${{ needs.publish.outputs.update_type }}
+                    Update Type: ${{ needs.publish.outputs.new_version }}
 
 
 
