@@ -88,8 +88,10 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
           configure_git: true
-      - name: notify
+      - uses: actions/checkout@v2
+      - name: Notify
         uses: ./.github/actions/external/telegram_notifier/.github/actions/notifier
+
         with:
           message: >
             Workflow Execution Summary:
@@ -104,8 +106,8 @@ jobs:
               ▪️ Build: ${{ needs.build.result }}
               ▪️ Test: ${{ needs.test.result }}
               ▪️ Publish: ${{ needs.publish.result }}
-                    New Version: ${{ needs.publish.outputs.update_type }}
-                    Update Type: ${{ needs.publish.outputs.new_version }}
+                    New Version: ${{ needs.publish.outputs.new_version }}
+                    Update Type: ${{ needs.publish.outputs.update_type }}
 
 
 
