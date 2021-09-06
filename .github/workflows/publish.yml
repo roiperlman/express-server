@@ -90,6 +90,8 @@ jobs:
           configure_git: true
       - uses: actions/checkout@v2
       - name: Notify
+      - run: ls /home/runner/work/express-server/express-server/.github/actions/external/telegram_notifier/.github/actions/notifier
+      - name: notify
         uses: ./.github/actions/external/telegram_notifier/.github/actions/notifier
 
         with:
