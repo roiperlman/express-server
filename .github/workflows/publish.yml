@@ -78,8 +78,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Notify
       - run: echo "Sending report to telgram bot"
+      - name: Notify
       - uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -99,9 +99,3 @@ jobs:
               ▪️ Publish: ${{ needs.publish.result }}
                     New Version: ${{ needs.publish.outputs.new_version }}
                     Update Type: ${{ needs.publish.outputs.update_type }}
-
-
-
-
-
-
