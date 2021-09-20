@@ -6,7 +6,7 @@ Control the setup process of Express apps services and dependencies.
 [![Dependency Count](https://badgen.net/bundlephobia/dependency-count/express-server)](https://badgen.net/bundlephobia/dependency-count/express-server)
 
 ## Install
-`$ npm install --save express-server`
+`$ npm install --save express-server-control`
 
 ## Usage
 
