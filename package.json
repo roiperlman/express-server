@@ -1,5 +1,5 @@
 {
-  "name": "express-server-contorl",
+  "name": "express-server-control",
   "version": "1.0.2",
   "description": "Control the setup process of express applications",
   "author": "Roi Perlman <Roi.Perlman@gmail.com>",
