@@ -11,9 +11,9 @@ Control the setup process of Express apps services and dependencies.
 ## Usage
 
 ```typescript
-const expressServer = require('ExpressServer');
+import { ExpressServer } from 'express-server-control';
 
-export const mainServer = new Server({
+export const mainServer = new ExpressServer({
   port: 8080,
   name: 'mainServer',
   beforeConfig: [ // An array of function that will run in series before mounting middleware
