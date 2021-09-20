@@ -1,6 +1,6 @@
 {
   "name": "express-server-contorl",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Control the setup process of express applications",
   "author": "Roi Perlman <Roi.Perlman@gmail.com>",
   "homepage": "https://github.com/roiperlman/express-server",
