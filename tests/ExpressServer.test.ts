@@ -121,7 +121,7 @@ describe('Server', async function () {
       beforeConfig: []
     });
     expect(server.httpServer).to.be.undefined;
-    await expect(server.close()).to.eventually.be.rejectedWith('Cannot read property \'close\' of undefined');
+    await expect(server.close()).to.eventually.be.rejectedWith("Cannot read property 'close' of undefined");
   });
   it('should run the beforeInit method', async function () {
     let server1 = new ExpressServer({
