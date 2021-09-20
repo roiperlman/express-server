@@ -486,7 +486,7 @@ describe('Server', async function () {
         ],
         runTestsBeforeListening: true
       });
-      await expect(server.test()).to.eventually.be.rejectedWith('Cannot read property \'execute\' of null');
+      await expect(server.test()).to.eventually.be.rejectedWith('Cannot read');
     });
     it('should return an empty array when no tests were defined', async function () {
       const server = new ExpressServer({
