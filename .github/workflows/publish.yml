@@ -38,10 +38,14 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: |
           npm install
-          npm install -g typescript mocha ts-node
+          npm install -g typescript mocha ts-node nyc
       - name: Run Tests
         id: test
         run: npm run test
+      - name: Coveralls report
+        id: coveralls
+        run: npm run coveralls
+
 
 ########## PUBLISH ##########
   publish:
