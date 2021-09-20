@@ -1,6 +1,9 @@
 # ExpressServer
 Control the setup process of Express apps services and dependencies.
 
+[![Coverage Status](https://coveralls.io/repos/github/roiperlman/express-server/badge.svg?branch=master)](https://coveralls.io/github/roiperlman/express-server?branch=master)
+[![Install Size](https://badgen.net/packagephobia/publish/express-server)](https://packagephobia.com/result?p=express-server)
+[![Dependency Count](https://badgen.net/bundlephobia/dependency-count/express-server)](https://badgen.net/bundlephobia/dependency-count/express-server)
 
 ## Install
 `$ npm install --save express-server`
