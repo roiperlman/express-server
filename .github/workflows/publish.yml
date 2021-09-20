@@ -91,7 +91,7 @@ jobs:
 ########## SEND REPORT ##########
   send_report:
     if: always()
-    needs: [ build, test, publish ]
+    needs: [ build, test, publish, coveralls ]
     runs-on: ubuntu-latest
 
     steps:
@@ -114,6 +114,7 @@ jobs:
             Jobs Status:
               ▪️ Build: ${{ needs.build.result }}
               ▪️ Test: ${{ needs.test.result }}
+              ▪️ Coveralls: ${{ needs.coveralls.result }}
               ▪️ Publish: ${{ needs.publish.result }}
                     New Version: ${{ needs.publish.outputs.new_version }}
                     Update Type: ${{ needs.publish.outputs.update_type }}
