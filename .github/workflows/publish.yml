@@ -44,6 +44,7 @@ jobs:
         run: npm run test
       - name: Coveralls report
         id: coveralls
+        if: ${{ matrix.node }} == '16'
         run: npm run coveralls
 
 
