@@ -42,6 +42,19 @@ jobs:
       - name: Run Tests
         id: test
         run: npm run test
+
+  coveralls:
+    needs: [ build, test ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: |
+          npm install
+          npm install -g typescript mocha ts-node nyc
       - name: Coveralls report
         id: coveralls
         if: ${{ matrix.node }} == '16'
