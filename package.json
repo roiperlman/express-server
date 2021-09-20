@@ -1,5 +1,5 @@
 {
-  "name": "@roip/express-server",
+  "name": "express-server",
   "version": "1.0.0",
   "description": "Control the setup process of express applications",
   "author": "Roi Perlman <Roi.Perlman@gmail.com>",
